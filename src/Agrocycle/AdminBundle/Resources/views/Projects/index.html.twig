@@ -1,0 +1,45 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Projecten</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_project_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuw Project</a></li>
+                </ul>
+        </header>
+        
+        <p class="well">Dit zijn projecten met Agrocycle voorbeelden</p>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Naam</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for project in projects %}
+		<tr class="gradeX">
+                        
+			<td><a href="{{path('agrocycle_admin_project_detail',{'id':project.id, 'slug':project.slug})}}" title="Bekijk Details">{{ project.title }}</a></td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_project_edit', {'id' : project.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_project_delete', {'id' : project.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

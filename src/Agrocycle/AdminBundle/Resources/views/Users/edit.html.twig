@@ -1,0 +1,37 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Bewerk {{user.firstName}} {{user.lastName}}</h2>
+                
+                <ul class="data-header-actions">
+                    <li><a  href="{{path('agrocycle_admin_user_index')}}"><span class="awe-arrow-left"></span> Terug naar overzicht</a></li>
+                </ul>
+        </header>
+        
+        <section>
+            <form action="{{path('agrocycle_admin_user_edit', {'id': user.id})}}" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-alt btn-large btn-success" />
+                </div>
+            </form>
+        </section>
+    </div>
+</article>
+
+
+<script type="text/javascript">
+       
+       $(document).ready(function() {
+           $("#form_username").focus(function() {
+               $(this).val($("#form_firstName").val().replace(/\s+/g, '')+$("#form_lastName").val().replace(/\s+/g, ''));
+           })
+        })
+    
+</script>
+
+{% endblock %}

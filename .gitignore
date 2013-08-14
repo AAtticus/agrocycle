@@ -1,0 +1,30 @@
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
+*/logs/*
+*/cache/*
+
+# Configuration files
+app/config/parameters.ini
+app/config/parameters.yml
+
+web/css/*
+web/js/*
+
+# Doctrine backup files
+*.php~
+
+# composer files
+composer.lock
+composer.phar
+
+# license files
+LICENSE
+README.md
+UPGRADE.md
+/nbproject/private/
+/nbproject/*
+/.idea
+.idea

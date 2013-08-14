@@ -1,0 +1,26 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Nieuwe Sector</h2>
+                
+                <ul class="data-header-actions">
+                    <li><a  href="{{path('agrocycle_admin_sector_index')}}"><span class="awe-arrow-left"></span> Terug naar overzicht</a></li>
+                </ul>
+        </header>
+        
+        <section>
+            <form action="{{path('agrocycle_admin_sector_create')}}" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-alt btn-large btn-success" />
+                </div>
+            </form>
+        </section>
+    </div>
+</article>
+
+{% endblock %}

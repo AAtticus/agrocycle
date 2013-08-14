@@ -1,0 +1,116 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+            <h2><a href="{{path('agrocycle_admin_organisation_index')}}">Organisaties</a> &raquo; <a href="{{path('agrocycle_admin_organisation_detail', {'id' : person.organisation.id, 'slug' : person.organisation.slug }) }}">{{person.organisation.name}}</a> &raquo; {{person}}</h2>
+                
+                <ul class="data-header-actions">
+                    <li><a href="{{path('agrocycle_admin_organisation_detail', {'id' : person.organisation.id, 'slug' : person.organisation.slug }) }}"><span class="awe-arrow-left"></span> Terug naar overzicht</a></li>
+                    <li><a href="{{path('agrocycle_admin_organisation_edit', {'id' : person.organisation.id }) }}"><span class="awe-edit"></span> Edit Details</a> </li>
+                </ul>
+        </header>
+        
+
+    </div>
+</article>
+</div>
+
+<div class="row">
+						
+        <!-- Data block -->
+        <article class="span6 data-block">
+                 <div class="data-container">
+                        <header>
+                                <h2>Projecten door {{person}}</h2>
+                                <ul class="data-header-actions">
+                                    <li><span class="awe-certificate"></span></li>
+                                </ul>
+                        </header>
+                        <section>
+                                <table class="table table-stripped table-hover">
+                                        <thead>
+                                                <tr>
+                                                        <th>Project</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {% for project in person.projects %}
+                                                <tr> 
+                                                    <td><a href="{{path('agrocycle_admin_project_detail',{'id': project.id, 'slug': project.slug})}}" title="Bekijk Details">{{project.title}}</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                </table>
+                        </section>
+                        <footer class="warning">
+                                <p>Projecten rechtstreeks toegewezen aan de persoon</p>
+                        </footer>
+                </div>
+                <div class="data-container">
+                        <header>
+                                <h2>Onderzoeken door {{person}}</h2>
+                                <ul class="data-header-actions">
+                                    <li><span class="awe-beaker"></span></li>
+                                </ul>
+                        </header>
+                        <section>
+                                <table class="table table-stripped table-hover">
+                                        <thead>
+                                                <tr>
+                                                        <th>Onderzoeken</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {% for research in person.researches %}
+                                                <tr> 
+                                                    <td><a href="{{path('agrocycle_admin_research_detail',{'id':research.id, 'slug': research.slug})}}" title="Bekijk Details">{{research.title}}</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                </table>
+                        </section>
+                        <footer class="warning">
+                                <p>Onderzoeken rechtstreeks toegewezen aan deze persoon</p>
+                        </footer>
+                </div>
+        </article>
+        <!-- /Data block -->
+
+        <!-- Data block -->
+        <article class="span6 data-block">
+                <div class="data-container">
+                        <header>
+                                <h2>Gegevens</h2>
+                                
+                        </header>
+                        <section>
+                               <table width="100%" class="table table-bordered table-striped">
+                <tr>
+                    <td>Email</td>
+                    <td><a href="mailt:{{person.email}}">{{person.email}}</a></td>
+                </tr>
+                 <tr>
+                    <td>Telefoonnummer</td>
+                    <td>{{person.telephone}}</td>
+                </tr>
+            </table>
+                        </section>
+                        <footer class="info">
+
+                        </footer>
+                </div>
+        </article>
+        <!-- /Data block -->
+
+</div>
+
+
+{% endblock %}
+
+{% block customjs %}
+{% endblock %}

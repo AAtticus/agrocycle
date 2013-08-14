@@ -1,0 +1,47 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Categorieën</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_category_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuwe Categorie</a></li>
+                </ul>
+        </header>
+        
+        <p class="well">Je kan door op een category te klikken de subcategorieën bekijken en aanpassen.</p>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Titel</th>
+			<th>Aantal Subcategorieën</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for category in categories %}
+		<tr class="gradeX">
+                        
+			<td><a href="{{path('agrocycle_admin_category_detail',{'id':category.id, 'slug':category.slug})}}">{{ category.title }}</a></td>
+                        <td><a href="{{path('agrocycle_admin_category_detail',{'id':category.id, 'slug':category.slug})}}">{{ category.subcategories|length }}</a></td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_category_edit', {'id' : category.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_category_delete', {'id' : category.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

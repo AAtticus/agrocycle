@@ -1,0 +1,53 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Personen</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_person_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuwe Persoon</a></li>
+                </ul>
+        </header>
+        
+        <p class="well">Een persoon kan zowel een onderzoeker als een bedrijfscontact zijn.</p>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Voornaam</th>
+                        <th>Familienaam</th>
+			<th>Email</th>
+                        <th>Telefoon</th>
+                        <th>Organisatie</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for person in persons %}
+		<tr class="gradeX">
+                        
+			<td><a href="{{path('agrocycle_admin_person_detail',{'id': person.id})}}" title="Bekijk Details">{{ person.firstName }}</a></td>
+                        <td><a href="{{path('agrocycle_admin_person_detail',{'id': person.id})}}" title="Bekijk Details">{{ person.lastName }}</a></td>
+                        <td><a href="mailto{{person.email}}">{{person.email}}</a></td>
+                        <td>{{person.telephone}}</td>
+                        <td><a href="{{path('agrocycle_admin_organisation_detail',{'id':person.organisation.id, 'slug':person.organisation.slug})}}" title="Bekijk Details">{{person.organisation.name}}</a></td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_person_edit', {'id' : person.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_person_delete', {'id' : person.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

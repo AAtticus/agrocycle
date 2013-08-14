@@ -1,0 +1,47 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Sectoren</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_sector_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuwe Sector</a></li>
+                </ul>
+        </header>
+        
+        <p class="well">Deze sectoren kan je op projectniveau gebruiken om projecten aan te koppelen</p>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Naam</th>
+                        <th>Aantal projecten</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for sector in sectors %}
+		<tr class="gradeX">
+                        
+			<td><a href="{{path('agrocycle_admin_sector_detail',{'id':sector.id, 'slug':sector.slug})}}" title="Bekijk Details">{{ sector.title }}</a></td>
+                        <td><a href="{{path('agrocycle_admin_sector_detail',{'id':sector.id, 'slug':sector.slug})}}" title="Bekijk Details">{{ sector.projects|length }}</a></td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_sector_edit', {'id' : sector.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_sector_delete', {'id' : sector.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Organisaties</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_organisation_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuwe Organisatie</a></li>
+                </ul>
+        </header>
+        
+        <p class="well">Een organisatie kan zowel een bedrijf als een onderzoeksinstelling zijn.<br />Klik op een organisatie om de leden, projecten en onderzoeken te zien.</p>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Naam</th>
+			<th>Email</th>
+			<th>Website</th>
+                        <th>Telefoon</th>
+                        <th>Contactpersonen</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for organisation in organisations %}
+		<tr class="gradeX">
+                        
+			<td><a href="{{path('agrocycle_admin_organisation_detail',{'id':organisation.id, 'slug':organisation.slug})}}" title="Bekijk Details">{{ organisation.name }}</a></td>
+                        <td>{{ organisation.email }}</td>
+                        <td>{{ organisation.website }}</td>
+                        <td>{{ organisation.telephone}}</td>
+                        <td>{{ organisation.persons|length}}</td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_organisation_edit', {'id' : organisation.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_organisation_delete', {'id' : organisation.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

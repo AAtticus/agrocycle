@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	<head>
+                
+		<meta charset="utf-8">
+		<title>Dashboard | Agrocycle</title>
+		<meta name="description" content="">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+	
+		<!-- CSS styles -->
+                <link rel="stylesheet" type="text/css"  href="{{ asset('bundles/agrocycleadmin/css/plugins/jquery.visualize.css') }}">
+                <link rel="stylesheet" type="text/css"  href="{{ asset('bundles/agrocycleadmin/css/plugins/jquery.jgrowl.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/agrocycleadmin/css/huraga-blue.css') }}">
+                <link rel="stylesheet" type="text/css"  href="{{ asset('bundles/agrocycleadmin/css/plugins/bootstrap-lightbox.min.css') }}">
+                <link rel="stylesheet" type="text/css"  href="{{ asset('bundles/agrocycleadmin/css/plugins/prettyPhoto.css') }}">
+               
+                
+                
+		
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="{{ asset('bundles/agrocycleadmin/img/icons/favicon.ico') }}">
+		
+		<!-- JS Libs -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script src="{{ asset('bundles/agrocycleadmin/js/libs/modernizr.js') }}"></script>
+                <script src="{{ asset('bundles/agrocycleadmin/js/libs/selectivizr.js') }}"></script>
+
+		
+	</head>
+	<body>
+		
+		<!-- Main page header -->
+		<header class="container">
+		
+			<!-- Main page logo -->
+			<h1><a href="{{ path('agrocycle_admin_default_index')}}" class="brand">Duverger</a></h1>
+			
+			<!-- Main page headline -->
+			<p>Project &amp; Research Management</p>
+			
+			<!-- Alternative navigation -->
+			<nav>
+				<ul>
+					<li><a href="{{path('fos_user_security_logout')}}">Logout</a></li>
+				</ul>
+			</nav>
+			<!-- /Alternative navigation -->
+			
+		</header>
+		<!-- /Main page header -->
+		
+		<!-- Main page container -->
+		<section class="container" role="main">
+		
+			<!-- Left (navigation) side -->
+			<div class="navigation-block">
+			
+				<!-- User profile -->
+				<section class="user-profile">
+					<figure>
+						<img alt="{{ app.user.firstName }} {{ app.user.lastName }}" src="{{ asset('bundles/agrocycleadmin/img/sil.gif') }}">
+						<figcaption>
+							<strong><a href="#" class="">{{ app.user.firstName }} {{ app.user.lastName }}</a></strong>
+							<ul>
+								<li><a class="btn btn-primary btn-flat" href="{{ path('fos_user_profile_edit')}}" title="Account settings">Mijn Account</a></li>
+							</ul>
+						</figcaption>
+					</figure>
+				</section>
+				<!-- /User profile -->
+				
+				
+				
+				<!-- Main navigation -->
+				<nav class="main-navigation" role="navigation">
+					<ul>
+						<li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_default_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_default_index')}}" class="no-submenu"><span class="awe-home"></span>Dashboard</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_users_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_user_index')}}" class="no-submenu"><span class="awe-user"></span>Gebruikers</a></li>
+                                                <li><hr></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_project_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_project_index')}}" class="no-submenu"><span class="awe-certificate"></span>Projecten</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_research_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_research_index')}}" class="no-submenu"><span class="awe-beaker"></span>Onderzoeken</a></li>
+                                                
+                                                <li><hr></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_location_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_location_index')}}" class="no-submenu"><span class="awe-map-marker"></span>Locaties</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_organisation_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_organisation_index')}}" class="no-submenu"><span class="awe-briefcase"></span>Organisaties</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_person_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_person_index')}}" class="no-submenu"><span class="awe-group"></span>Personen</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_category_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_category_index')}}" class="no-submenu"><span class="awe-filter"></span>Categorieën</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_sector_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_sector_index')}}" class="no-submenu"><span class="awe-cloud"></span>Sectoren</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_process_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_process_index')}}" class="no-submenu"><span class="awe-arrow-right"></span>Processen</a></li>
+                                                <li {% if (app.request.attributes.get('_route') == 'agrocycle_admin_result_index') %} class="current" {% endif %}><a href="{{path('agrocycle_admin_result_index')}}" class="no-submenu"><span class="awe-bar-chart"></span>Hefbomen&amp;Barrières</a></li>
+					
+                                        </ul>
+				</nav>
+				<!-- /Main navigation -->
+				
+				
+				
+			</div>
+			<!-- Left (navigation) side -->
+			
+			<!-- Right (content) side -->
+			<div class="content-block" role="main">
+                            
+                            {% if app.session.hasFlash('warning') %}
+                                <div class="alert alert-error">
+                                    {{ app.session.flash('warning') }}
+                                </div>
+                            {% endif %}
+                             {% if app.session.hasFlash('success') %}
+                                <div class="alert alert-success">
+                                    {{ app.session.flash('success') }}
+                                </div>
+                            {% endif %}
+                            {% block body %}
+                            {% endblock %}
+				<!-- Page header -->
+				
+			</div>
+			<!-- /Right (content) side -->
+			
+		</section>
+		<!-- /Main page container -->
+		
+		<!-- Main page footer -->
+		<footer class="container">
+			<p>&copy  2013 Agrocycle.</p>
+			
+			<a href="#top" class="btn btn-primary btn-flat pull-right">Top &uarr;</a>
+		</footer>
+		<!-- /Main page footer -->
+		
+		<!-- Scripts -->
+		<script src="{{ asset('bundles/agrocycleadmin/js/navigation.js') }}"></script>
+		<script src="{{ asset('bundles/agrocycleadmin/js/bootstrap/bootstrap-affix.js') }}"></script>
+		<script src="{{ asset('bundles/agrocycleadmin/js/bootstrap/bootstrap-tooltip.js') }}"></script>
+		<script src="{{ asset('bundles/agrocycleadmin/js/bootstrap/bootstrap-collapse.js') }}"></script>
+		<script src="{{ asset('bundles/agrocycleadmin/js/bootstrap/bootstrap-dropdown.js') }}"></script>
+                <script src="{{ asset('bundles/agrocycleadmin/js/plugins/dataTables/jquery.datatables.min.js') }}"></script>
+                <script src="{{ asset('bundles/agrocycleadmin/js/bootstrap/bootstrap-tab.js') }}"></script>
+                <script src="{{ asset('bundles/agrocycleadmin/js/bootstrap/bootstrap-lightbox.min.js') }}"></script>
+                <script src="{{ asset('bundles/agrocycleadmin/js/plugins/prettyPhoto/jquery.prettyPhoto.js') }}"></script>
+                <script src="{{ asset('bundles/agrocycleadmin/js/plugins/jGrowl/jquery.jgrowl.js') }}"></script>
+                <!--[if lte IE 8]>
+                <script src="{{ asset('bundles/agrocycleadmin/js/plugins/visualize/excanvas.js') }}"></script>
+                <![endif]-->
+                <script src="{{ asset('bundles/agrocycleadmin/js/plugins/visualize/jquery.visualize.min.js') }}"></script>
+                <script src="{{ asset('bundles/agrocycleadmin/js/plugins/visualize/jquery.visualize.tooltip.min.js') }}"></script>
+                <script>
+			/* Default class modification */
+			$.extend( $.fn.dataTableExt.oStdClasses, {
+				"sWrapper": "dataTables_wrapper form-inline"
+			} );
+			
+			/* API method to get paging information */
+			$.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
+			{
+				return {
+					"iStart":         oSettings._iDisplayStart,
+					"iEnd":           oSettings.fnDisplayEnd(),
+					"iLength":        oSettings._iDisplayLength,
+					"iTotal":         oSettings.fnRecordsTotal(),
+					"iFilteredTotal": oSettings.fnRecordsDisplay(),
+					"iPage":          Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
+					"iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
+				};
+			}
+			
+			/* Bootstrap style pagination control */
+			$.extend( $.fn.dataTableExt.oPagination, {
+				"bootstrap": {
+					"fnInit": function( oSettings, nPaging, fnDraw ) {
+						var oLang = oSettings.oLanguage.oPaginate;
+						var fnClickHandler = function ( e ) {
+							e.preventDefault();
+							if ( oSettings.oApi._fnPageChange(oSettings, e.data.action) ) {
+								fnDraw( oSettings );
+							}
+						};
+						
+						$(nPaging).addClass('pagination').append(
+							'<ul>'+
+								'<li class="prev disabled"><a href="#">&larr; '+oLang.sPrevious+'</a></li>'+
+								'<li class="next disabled"><a href="#">'+oLang.sNext+' &rarr; </a></li>'+
+							'</ul>'
+						);
+						var els = $('a', nPaging);
+						$(els[0]).bind( 'click.DT', { action: "previous" }, fnClickHandler );
+						$(els[1]).bind( 'click.DT', { action: "next" }, fnClickHandler );
+					},
+					
+					"fnUpdate": function ( oSettings, fnDraw ) {
+						var iListLength = 5;
+						var oPaging = oSettings.oInstance.fnPagingInfo();
+						var an = oSettings.aanFeatures.p;
+						var i, j, sClass, iStart, iEnd, iHalf=Math.floor(iListLength/2);
+						
+						if ( oPaging.iTotalPages < iListLength) {
+							iStart = 1;
+							iEnd = oPaging.iTotalPages;
+						}
+						else if ( oPaging.iPage <= iHalf ) {
+							iStart = 1;
+							iEnd = iListLength;
+						} else if ( oPaging.iPage >= (oPaging.iTotalPages-iHalf) ) {
+							iStart = oPaging.iTotalPages - iListLength + 1;
+							iEnd = oPaging.iTotalPages;
+						} else {
+							iStart = oPaging.iPage - iHalf + 1;
+							iEnd = iStart + iListLength - 1;
+						}
+						
+						for ( i=0, iLen=an.length ; i<iLen ; i++ ) {
+							// Remove the middle elements
+							$('li:gt(0)', an[i]).filter(':not(:last)').remove();
+							
+							// Add the new list items and their event handlers
+							for ( j=iStart ; j<=iEnd ; j++ ) {
+								sClass = (j==oPaging.iPage+1) ? 'class="active"' : '';
+								$('<li '+sClass+'><a href="#">'+j+'</a></li>')
+									.insertBefore( $('li:last', an[i])[0] )
+									.bind('click', function (e) {
+										e.preventDefault();
+										oSettings._iDisplayStart = (parseInt($('a', this).text(),10)-1) * oPaging.iLength;
+										fnDraw( oSettings );
+									} );
+							}
+							
+							// Add / remove disabled classes from the static elements
+							if ( oPaging.iPage === 0 ) {
+								$('li:first', an[i]).addClass('disabled');
+							} else {
+								$('li:first', an[i]).removeClass('disabled');
+							}
+							
+							if ( oPaging.iPage === oPaging.iTotalPages-1 || oPaging.iTotalPages === 0 ) {
+								$('li:last', an[i]).addClass('disabled');
+							} else {
+								$('li:last', an[i]).removeClass('disabled');
+							}
+						}
+					}
+				}
+			});
+			
+			/* Show/hide table column */
+			function dtShowHideCol( iCol ) {
+				var oTable = $('#example-2').dataTable();
+				var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+				oTable.fnSetColumnVis( iCol, bVis ? false : true );
+			};
+			
+			/* Table #example */
+			$(document).ready(function() {
+				$('.datatable').dataTable( {
+					"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+					"sPaginationType": "bootstrap",
+					"oLanguage": {
+						"sLengthMenu": "_MENU_ records per page"
+					}
+				});
+				$('.datatable-controls').on('click','li input',function(){
+					dtShowHideCol( $(this).val() );
+				})
+			});
+                        
+                        
+                       
+		</script>
+                
+                {% block customjs %}
+                {% endblock %}
+		
+		
+		
+	</body>
+</html>

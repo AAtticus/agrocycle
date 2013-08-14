@@ -1,0 +1,50 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Gebruikers</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_user_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuwe gebruiker</a></li>
+                </ul>
+        </header>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Gebruikersnaam</th>
+			<th>Email</th>
+			<th>Rol</th>
+                        <th>Bewerk</th>
+			<th>Verwijder</th>
+		</tr>
+	</thead>
+	<tbody>
+                {% for user in users %}
+		<tr class="gradeX">
+                        
+			<td>{{ user.username }}</td>
+                        <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+			<td class="center">
+                            {% for role in user.roles %}
+                                <span class="label label-info">{{role}}</span>
+                            {% endfor %}
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_user_edit', {'id' : user.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_user_delete', {'id' : user.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

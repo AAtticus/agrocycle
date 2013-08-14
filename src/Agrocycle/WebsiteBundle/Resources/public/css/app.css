@@ -1,0 +1,218 @@
+/* 
+    Document   : app
+    Created on : Mar 1, 2013, 9:37:45 PM
+    Author     : Simon Verraest
+    Description:
+        Customization of the Foundation theme for Agrocycle
+*/
+
+
+
+/* -----------------------------------------
+   Fonts
+----------------------------------------- */
+@font-face {
+    font-family: 'futura_md_btbold';
+    src: url('../fonts/futura_md_bt_bold-webfont.eot');
+    src: url('../fonts/futura_md_bt_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/futura_md_bt_bold-webfont.woff') format('woff'),
+         url('../fonts/futura_md_bt_bold-webfont.ttf') format('truetype'),
+         url('../fonts/futura_md_bt_bold-webfont.svg#futura_md_btbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'webfontregular';
+    src: url('../fonts/futuran-webfont.eot');
+    src: url('../fonts/futuran-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/futuran-webfont.woff') format('woff'),
+         url('../fonts/futuran-webfont.ttf') format('truetype'),
+         url('../fonts/futuran-webfont.svg#webfontregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* -----------------------------------------
+   General
+----------------------------------------- */
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'webfontregular';
+    background: #eee;
+}
+
+h3 {
+    color: white;
+    font-family: 'futura_md_btbold';
+    text-transform: uppercase;
+    font-size: 22px;
+}
+
+.container {
+    background: #62A74C url('../img/agrocycle/home_background.jpg') top center;
+    background-size: cover;
+    width: 100%;
+    
+
+}
+
+/* -----------------------------------------
+   Primary Site Navigation
+----------------------------------------- */
+
+
+nav.main {
+    padding: 15px 0px 10px 0px;
+    background: rgba(255,255,255,0.75);
+    width: 100%;
+    z-index: 99;
+}
+
+
+
+.primary li {
+    line-height: 56px;
+    display: inline-block;
+    margin-left: 25px;
+}
+
+
+.primary li a {
+    color: #222;
+    font-family: 'futura_md_btbold';
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+.primary li.active a,
+.primary li a:hover,
+.primary li a:focus {
+    color: #3ba0cd;
+}
+
+
+.secondary a {
+    font-size: 0.7em;
+    color: #222;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+.tagline {
+    margin: 83px 0px 300px 0px;
+   
+}
+
+.tagline h2 {
+    font-family: 'webfontregular';
+    font-weight: lighter;
+    font-size: 2.2em;
+}
+
+.tagline h2 span {
+    padding: 5px 8px;
+    background: rgba(0,0,0,0.85);
+    color: white;
+}
+
+
+
+.content {
+    border-top: solid 10px #62A74C
+}
+
+.main-content {
+    width: 980px;
+    background: white;
+    margin: -240px auto 0 auto;
+    min-height: 600px;
+    -webkit-box-shadow:  0px 3px 3px 1px rgba(0, 0, 0, 0.2);
+    box-shadow:  0px 3px 3px 1px rgba(0, 0, 0, 0.2);
+    padding: 15px 0px;
+}
+
+.main-content h3 {
+    color: #222;
+}
+
+footer {
+ background: #62A74C url('../img/agrocycle/body_bg.jpg') top left repeat;
+ position: absolute;
+ width: 100%;
+ margin-top: -50px;
+ z-index: -999;
+ padding-top: 65px;
+ 
+}
+
+footer a ,
+footer p{
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+footer a:hover,
+footer a:focus,
+footer a:active {
+    color: #222;
+}
+
+.search-box {
+     background: #62A74C url('../img/agrocycle/body_bg.jpg') top left repeat;
+     min-height: 150px;
+     margin: 15px 0px 0px 0px;
+}
+
+.search-box form {
+    padding: 15px 0px;
+}
+
+
+
+.search-box form label {
+    color: white;
+    text-transform: uppercase;
+}
+
+.expand-search {
+   background: #305025;
+   display: block;
+   text-align: center;
+   color: white;
+   padding: 8px 0px;
+   -webkit-box-shadow: inset 0px 3px 3px 3px rgba(0, 0, 0, 0.3);     
+   box-shadow: inset 0px 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+.expand-search a {
+   color: white;
+}
+
+.search-box form {
+    margin: 0px !important;
+}
+
+.sponsors {
+    margin: 30px 0px 0px 0px;
+    padding: 0px 0px 30px 0px;
+    text-align: center;
+}
+
+.sponsors a{
+    display: block;
+    text-align: center;
+    width: 100%
+}
+.sponsors a img {
+    margin: 0 auto;
+}
+
+#map_canvas {
+    margin: 15px 0px;
+}

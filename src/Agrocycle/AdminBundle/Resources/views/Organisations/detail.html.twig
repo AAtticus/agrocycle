@@ -1,0 +1,164 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2><a href="{{path('agrocycle_admin_organisation_index')}}">Organisaties</a> &raquo; {{organisation.name}}</h2>
+                
+                <ul class="data-header-actions">
+                    <li><a  href="{{path('agrocycle_admin_organisation_index')}}"><span class="awe-arrow-left"></span> Terug naar overzicht</a></li>
+                    <li><a href="{{path('agrocycle_admin_organisation_edit', {'id' : organisation.id }) }}"><span class="awe-edit"></span> Edit Details</a> </li>
+                </ul>
+        </header>
+        
+        <section>
+            
+            {{organisation.location}} - <a href="{{path('agrocycle_admin_location_edit', {'id' : organisation.location.id})}}">Bewerk Locatie</a>
+            
+        </section>
+
+
+    </div>
+</article>
+</div>
+
+<div class="row">
+						
+        <!-- Data block -->
+        <article class="span6 data-block">
+                <div class="data-container">
+                        <header>
+                                <h2>Contactpersonen bij {{organisation.name}}</h2>
+                                <ul class="data-header-actions">
+                                    <li><span class="awe-group"></span></li>
+                                </ul>
+                        </header>
+                        <section>
+                                <table class="table table-stripped table-hover">
+                                        <thead>
+                                                <tr>
+                                                        <th>Voornaam</th>
+                                                        <th>Familienaam</th>
+                                                        <th>Email</th>
+                                                        <th>Telefoon</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {% for person in organisation.persons %}
+                                                <tr> 
+                                                    <td><a href="{{path('agrocycle_admin_person_detail',{'id': person.id})}}" title="Bekijk Details">{{person.firstName}}</a></td>
+                                                    <td><a href="{{path('agrocycle_admin_person_detail',{'id': person.id})}}" title="Bekijk Details">{{person.lastName}}</a></td>
+                                                    <td><a href="mailto:{{person.email}}">{{person.email}}</a></td>
+                                                    <td>{{person.telephone}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                </table>
+                        </section>
+                        <footer class="warning">
+                                <p>Het is aangeraden om elke persoon in het systeem toe te wijzen aan een organisatie.</p>
+                        </footer>
+                </div>
+            
+            <div class="data-container">
+                        <header>
+                                <h2>Projecten bij {{organisation.name}}</h2>
+                                <ul class="data-header-actions">
+                                    <li><span class="awe-certificate"></span></li>
+                                </ul>
+                        </header>
+                        <section>
+                                <table class="table table-stripped table-hover">
+                                        <thead>
+                                                <tr>
+                                                        <th>Project</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {% for project in organisation.projects %}
+                                                <tr> 
+                                                    <td><a href="{{path('agrocycle_admin_project_detail',{'id': project.id, 'slug': project.slug})}}" title="Bekijk Details">{{project.title}}</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                </table>
+                        </section>
+                        <footer class="warning">
+                                <p>Projecten rechtstreeks toegewezen aan het bedrijf zonder tussenpersoon</p>
+                        </footer>
+                </div>
+              <div class="data-container">
+                        <header>
+                                <h2>Onderzoeken bij {{organisation.name}}</h2>
+                                <ul class="data-header-actions">
+                                    <li><span class="awe-beaker"></span></li>
+                                </ul>
+                        </header>
+                        <section>
+                                <table class="table table-stripped table-hover">
+                                        <thead>
+                                                <tr>
+                                                        <th>Onderzoeken</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {% for research in organisation.researches %}
+                                                <tr> 
+                                                    <td><a href="{{path('agrocycle_admin_research_detail',{'id':research.id, 'slug': research.slug})}}" title="Bekijk Details">{{research.title}}</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                </table>
+                        </section>
+                        <footer class="warning">
+                                <p>Onderzoeken rechtstreeks toegewezen aan het bedrijf zonder tussenpersoon</p>
+                        </footer>
+                </div>
+        </article>
+        <!-- /Data block -->
+
+        <!-- Data block -->
+        <article class="span6 data-block">
+                <div class="data-container">
+                        <header>
+                                <h2>Map</h2>
+                                
+                        </header>
+                        <section>
+                               {{ google_map_container(map) }}
+                               <hr>
+                               <table width="100%" class="table table-bordered table-striped">
+                                <tr>
+                                    <td>Email</td>
+                                    <td><a href="mailto:{{organisation.email}}">{{organisation.email}}</a></td>
+                                </tr>
+                                 <tr>
+                                    <td>Website</td>
+                                    <td><a href="{{organisation.website}}">{{organisation.website}}</a></td>
+                                </tr>
+                                 <tr>
+                                    <td>Telefoonnummer</td>
+                                    <td>{{organisation.telephone}}</td>
+                                </tr>
+                            </table>
+                        </section>
+                        <footer class="info">
+                                <p>Deze locatie wordt berekend via de Google Maps API</p>
+                        </footer>
+                </div>
+        </article>
+        <!-- /Data block -->
+
+</div>
+
+
+{% endblock %}
+
+{% block customjs %}
+{{ google_map_js(map) }}
+{% endblock %}

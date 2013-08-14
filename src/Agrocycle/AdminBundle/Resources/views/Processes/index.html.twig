@@ -1,0 +1,45 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Processen en Stromen</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_process_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuw Proces</a></li>
+                </ul>
+        </header>
+        
+        <p class="well">Deze processen kan je op projectniveau gebruiken om projecten aan te koppelen</p>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Naam</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for process in processes %}
+		<tr class="gradeX">
+                        
+			<td>{{ process.title }}</td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_process_edit', {'id' : process.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_process_delete', {'id' : process.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

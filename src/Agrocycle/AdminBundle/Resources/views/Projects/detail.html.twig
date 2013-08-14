@@ -1,0 +1,169 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2><a href="{{path('agrocycle_admin_project_index')}}">Projecten</a> &raquo; {{project.title}}</h2>
+                
+                <ul class="data-header-actions">
+                    <li><a  href="{{path('agrocycle_admin_project_index')}}"><span class="awe-arrow-left"></span> Terug naar overzicht</a></li>
+                    <li><a href="{{path('agrocycle_admin_project_edit', {'id' : project.id }) }}"><span class="awe-edit"></span> Edit Details</a> </li>
+                </ul>
+        </header>
+        
+        <section>
+            
+            <h1><blockquote>{{project.title}}</blockquote></h1>
+            
+        </section>
+
+
+    </div>
+</article>
+</div>
+
+<div class="row">
+<article class="span8 data-block">
+    <div class="data-container">
+        <header>
+            <h2>Details</h2>
+        </header>
+
+        
+        <section>
+             <table width="100%" class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td>Onderzoek?</td>
+                    <td>{% if project.research %}<a href="{{path('agrocycle_admin_research_detail', {'id': project.research.id, 'slug':project.research.slug})}}">{{project.research.title}}</a>{% endif %}</td>
+                </tr>
+                 <tr>
+                    <td>Bron</td>
+                    <td>{{project.source}}</td>
+                </tr>
+                <tr>
+                    <td>Sector</td>
+                    <td><a href="{{path('agrocycle_admin_sector_detail', {'id': project.sector.id, 'slug':project.sector.slug})}}">{{project.sector.title}}</a></td>
+                </tr>
+                <tr>
+                    <td>Bio</td>
+                    <td>{{project.isbio}}</td>
+                </tr>
+                <tr>
+                    <td>Primaire Activiteit</td>
+                    <td>{{project.primaryActivity}}</td>
+                </tr>
+                <tr>
+                    <td>Hoofdstromen</td>
+                    <td>
+                        <ul>
+                        {% for process in project.primaryFlow %}
+                        <li>{{process.title}}</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nevenstromen</td>
+                    <td>
+                        {% if project.secondaryFlow %}
+                        <ul>
+                        {% for process in project.secondaryFlow %}
+                        <li>{{process.title}}</li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nevenstromen van derden</td>
+                    <td>
+                        {% if project.externalFlow %}
+                        <ul>
+                        {% for process in project.externalFlow %}
+                        <li>{{process.title}}</li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hefbomen &amp; Barrières</td>
+                    <td>
+                        {% if project.results %}
+                        <strong>HEFBOMEN</strong>
+                        <ul>
+                        {% for result in project.results %}
+                        {% if result.positive %}
+                        <li>{{result.title}}</li>
+                        {% endif %}
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+                         {% if project.results %}
+                        <strong>BARRIERES</strong>
+                        <ul>
+                        {% for result in project.results %}
+                        {% if result.positive == 0 %}
+                        <li>{{result.title}}</li>
+                        {% endif %}
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                 <tr>
+                    <td>Voorbeeld sluiten Nevenstromen</td>
+                    <td>{{project.secondaryCycleExample}}</td>
+                </tr>
+                 <tr>
+                    <td>Agrocycle Kringloopsluiten</td>
+                    <td>{{project.cycleExample}}</td>
+                </tr>
+                <tr>
+                    <td>Inspiratie</td>
+                    <td>{{project.primaryActivity}}</td>
+                </tr>
+                 <tr>
+                    <td>Extra Informatie</td>
+                    <td>{{project.extraInformation}}</td>
+                </tr>
+
+            </table>
+        </section>
+    </div>
+</article>
+<article class="span4 data-block">
+    <div class="data-container">
+        <header>
+            <h2>Gegevens</h2>
+        </header>
+
+        
+        <section>
+            <table width="100%">
+                <tr>
+                    <td>Organisatie</td>
+                    <td><a href="{{path('agrocycle_admin_organisation_detail', {'id': project.organisation.id, 'slug':project.organisation.slug})}}">{{project.organisation.name}}</a></td>
+                </tr>
+                 <tr>
+                    <td>Contactpersoon</td>
+                    <td><a href="{{path('agrocycle_admin_person_detail', {'id': project.person.id})}}">{{project.person}}</a></td>
+                </tr>
+                 <tr>
+                    <td>Subcategory</td>
+                    <td><a href="{{path('agrocycle_admin_subcategory_detail', {'id': project.subcategory.id, 'slug':project.subcategory.slug})}}">{{project.subcategory.title}}</a></td>
+                </tr>
+            </table>
+        </section>
+    </div>
+</article>   
+</div>
+
+
+{% endblock %}
+
+{% block customjs %}
+{% endblock %}

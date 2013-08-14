@@ -1,0 +1,146 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2><a href="{{path('agrocycle_admin_research_index')}}">Onderzoeken</a> &raquo; {{research.title}}</h2>
+                
+                <ul class="data-header-actions">
+                    <li><a  href="{{path('agrocycle_admin_research_index')}}"><span class="awe-arrow-left"></span> Terug naar overzicht</a></li>
+                    <li><a href="{{path('agrocycle_admin_research_edit', {'id' : research.id }) }}"><span class="awe-edit"></span> Edit Details</a> </li>
+                </ul>
+        </header>
+        
+        <section>
+            
+            <h1><blockquote>{{research.title}}</blockquote></h1>
+            
+        </section>
+
+
+    </div>
+</article>
+</div>
+
+<div class="row">
+<article class="span8 data-block">
+    <div class="data-container">
+        <header>
+            <h2>Details</h2>
+        </header>
+
+        
+        <section>
+             <table width="100%" class="table table-striped table-bordered table-hover">
+                 <tr>
+                    <td>Bron / Website</td>
+                    <td><a href="{{research.website}}">{{research.website}}</a></td>
+                </tr>
+               
+               
+                <tr>
+                    <td>Zijn er projecten uit voort gekomen?</td>
+                    <td>
+                        {% if research.projects %}
+                        <ul>
+                        {% for project in research.projects %}
+                        <li><a href="{{path('agrocycle_admin_project_detail', {'id': project.id, 'slug': project.slug})}}">{{project.title}}</a></li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nevenstromen</td>
+                    <td>
+                        {% if research.secondaryFlow %}
+                        <ul>
+                        {% for process in research.secondaryFlow %}
+                        <li>{{process.title}}</li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Hefbomen &amp; Barrières</td>
+                    <td>
+                        {% if research.results %}
+                        <strong>HEFBOMEN</strong>
+                        <ul>
+                        {% for result in research.results %}
+                        {% if result.positive %}
+                        <li>{{result.title}}</li>
+                        {% endif %}
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+                         {% if research.results %}
+                        <strong>BARRIERES</strong>
+                        <ul>
+                        {% for result in research.results %}
+                        {% if result.positive == 0 %}
+                        <li>{{result.title}}</li>
+                        {% endif %}
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                 <tr>
+                    <td>Duur van het onderzoek</td>
+                    <td>{{research.duration}}</td>
+                </tr>
+                 <tr>
+                    <td>Aangevraagd door?</td>
+                    <td>{{research.applicant}}</td>
+                </tr>
+                <tr>
+                    <td>Financiering</td>
+                    <td>{{research.financing}}</td>
+                </tr>
+                <tr>
+                    <td>Partners</td>
+                    <td>{{research.partners}}</td>
+                </tr>
+                 <tr>
+                    <td>Notities</td>
+                    <td>{{research.notes}}</td>
+                </tr>
+
+            </table>
+        </section>
+    </div>
+</article>
+<article class="span4 data-block">
+    <div class="data-container">
+        <header>
+            <h2>Gegevens</h2>
+        </header>
+
+        
+        <section>
+            <table width="100%">
+                <tr>
+                    <td>Organisatie</td>
+                    <td>{% if research.organisation %}<a href="{{path('agrocycle_admin_organisation_detail', {'id': research.organisation.id, 'slug':research.organisation.slug})}}">{{research.organisation.name}}</a>{% endif %}</td>
+                </tr>
+                 <tr>
+                    <td>Contactpersoon</td>
+                    <td>{% if research.person %}<a href="{{path('agrocycle_admin_person_detail', {'id': reseach.person.id})}}">{{research.person}}</a> {% endif %}</td>
+                </tr>
+            </table>
+        </section>
+    </div>
+</article>   
+</div>
+
+
+{% endblock %}
+
+{% block customjs %}
+{% endblock %}

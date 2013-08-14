@@ -1,0 +1,51 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Hefbomen &amp; Barrières</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_result_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuwe Hefboom of Barrière</a></li>
+                </ul>
+        </header>
+        
+        <p class="well">Deze hefbomen en barrières kan je aan projecten en onderzoeken koppelen</p>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Naam</th>
+                        <th>Positief?</th>
+                        <th>Aantal projecten</th>
+                        <th>Aantal onderzoeken</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for result in results %}
+		<tr class="gradeX">
+                        
+			<td><a href="{{path('agrocycle_admin_result_detail',{'id':result.id, 'slug':result.slug})}}" title="Bekijk Details">{{ result.title }}</a></td>
+                        <td>{{result.positive}}</td>
+                        <td><a href="{{path('agrocycle_admin_result_detail',{'id':result.id, 'slug':result.slug})}}" title="Bekijk Details">{{ result.projects|length }}</a></td>
+                        <td><a href="{{path('agrocycle_admin_result_detail',{'id':result.id, 'slug':result.slug})}}" title="Bekijk Details">{{ result.researches|length }}</a></td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_result_edit', {'id' : result.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_result_delete', {'id' : result.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}

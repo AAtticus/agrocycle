@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title>Login | Agrocycle</title>
+		<meta name="description" content="">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- CSS styles -->
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/agrocycleadmin/css/huraga-blue.css') }}">
+		
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="{{ asset('bundles/agrocycleadmin/img/icons/favicon.ico') }}">
+		
+		<!-- JS Libs -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script src="{{ asset('bundles/agrocycleadmin/js/libs/modernizr.js') }}"></script>
+	</head>
+	<body>
+		
+		<!-- Main page container -->
+		<section class="container login" role="main">
+			
+			<h1><a href="#" class="brand">Agrocyle</a></h1>
+			<div class="data-block">
+				{% block body %}
+                                    {{ block('fos_user_content') }}
+                                {% endblock %}
+			</div>
+			
+		</section>
+		<!-- /Main page container -->
+		
+		
+	</body>
+</html>
+
+

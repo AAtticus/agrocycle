@@ -1,0 +1,1 @@
+[06-Mar-2013 23:04:51 Europe/Berlin] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 30720 bytes) in /home/siverra/public_html/clients/agrocycle/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerResolver.php on line 74

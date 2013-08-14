@@ -1,0 +1,57 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+
+
+<article class="page-header">
+        <h1>Dashboard</h1>
+        <p>Welkom op het administratiepaneel van <strong>Agrocycle</strong>. </p>
+        <p>Via het menu aan uw linkerzijde kan u de de projecten en onderzoeken beheren.</p>
+</article>
+
+
+
+
+<div class="row">
+<article class="span6 data-block">
+    <div class="data-container">
+        <header>
+            <h2>Onderzoeken</h2>
+        </header>
+
+        
+        <section>
+            
+              <h1><a href="{{path('agrocycle_admin_research_index')}}">{{researches|length}}</a> onderzoek(en) in de database</h1>
+              
+              <hr>
+              
+              <p><a class="btn btn-primary btn-large" href="{{path('agrocycle_admin_research_create')}}">Nieuw Onderzoek</a></p>
+              
+        </section>
+    </div>
+</article>
+<article class="span6 data-block">
+    <div class="data-container">
+        <header>
+            <h2>Projecten</h2>
+        </header>
+
+        
+        <section>
+            
+            <h1><a href="{{path('agrocycle_admin_project_index')}}">{{projects|length}}</a> project(en) in de database</h1>
+               <hr>
+              
+              <p><a class="btn btn-primary btn-large" href="{{path('agrocycle_admin_project_create')}}">Nieuw Project</a></p>
+        </section>
+    </div>
+</article>  
+</div>
+    
+
+{% endblock %}
+
+{% block customjs %}
+   
+{% endblock %}

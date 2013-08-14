@@ -1,0 +1,14 @@
+parameters:
+    database_driver: pdo_pgsql
+    database_host: localhost
+    database_port: 5432
+    database_name: agrocycle
+    database_user: postgres
+    database_password: ~
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: cfbe973de3ac0b6a5c3ce9b8f406f2e7526d613d
+    database_path: null

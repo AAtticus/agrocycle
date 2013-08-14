@@ -1,0 +1,129 @@
+{% extends "AgrocycleWebsiteBundle::base.html.twig" %}
+
+{% block tagline %}
+ <h2><span>Duurzame land- en tuinbouw dankzij</span></h2>
+ <h2><span>gesloten kringlopen van hoogwaardige biomassa.</span></h2>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="large-12 columns">
+
+    <h3>Zoeken naar projecten en onderzoek</h3>
+    <span class="sub">Selecteer jouw filters en vind een agrocycle project of onderzoek</span>
+
+    </div>
+</div>
+
+<div class="search-box">
+
+    <form class="custom">
+        
+        <div class="row" style="display: none" id="advanced">
+
+            <div class="large-5 columns">
+
+                <label>Sector</label>
+                <input type="text">
+
+                <label>Product</label>
+                <select>
+                    <option>Fruit</option>
+                  </select>
+
+                <label>Onderzoek</label>
+                <select>
+                    <option>Ja</option>
+                  </select>
+
+            </div>
+             <div class="large-5 columns large-offset-2">
+
+                  <label>Hefbomen</label>
+                <select>
+                    <option>Financieel</option>
+                  </select>
+
+                <label>Barrières</label>
+                <select>
+                    <option>Infrastructuur</option>
+                  </select>
+
+                 <label>Hoofdstroom</label>
+                <select>
+                    <option>Fruitverwerking</option>
+                  </select>
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="large-5 columns">
+
+                <label>Bedrijfsnaam</label>
+                <input type="text">
+
+                <label>Land</label>
+                <select>
+                    <option>België</option>
+                    <option>Nederland</option>
+                    <option>Frankrijk</option>
+                    <option>Italië</option>
+                    <option>Duitsland</option>
+                    <option>Spanje</option>
+                  </select>
+
+                <label>Regio</label>
+                <select>
+                    <option>Vlaams-Brabant</option>
+                  </select>
+
+            </div>
+             <div class="large-5 columns large-offset-2">
+
+                  <label>Categorie</label>
+                <select>
+                    <option>Graan</option>
+                  </select>
+
+                <label>Subcategorie</label>
+                <select>
+                    <option>Tarwe</option>
+                  </select>
+
+                <input type="submit" class="medium button expand" value="Zoeken">
+
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<span><a href="#" class="expand-search">Uitgebreid zoeken</a></span>
+
+
+<div class="row">
+    <div class="large-12 columns">
+        <p></p>
+    <h3>Agrocycle</h3>
+    <hr>
+    <p>Agrocycle is een project om het kringloopsluiten te bevorderen in de agrovoedingssector.</p>
+
+    <p>Door een sterke samenwerking tussen ondernemingen, overheid, onderwijs en onderzoek kunnen prachtige duurzame projecten gerealiseerd worden.</p>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block customjs %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.expand-search').click(function(){
+            $('#advanced').toggle();
+        });
+    });
+</script>
+{% endblock %}

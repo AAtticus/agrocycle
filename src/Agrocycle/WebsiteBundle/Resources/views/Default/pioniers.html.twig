@@ -1,0 +1,47 @@
+{% extends "AgrocycleWebsiteBundle::base.html.twig" %}
+
+{% block tagline %}
+ <h2><span>Pioniers in het kringloopsluiten</span></h2>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="large-12 columns">
+
+    <h3>Een overzicht</h3>
+    <span class="sub">Vind de pioniers van het kringloopsluiten op onze map.</span>
+
+    </div>
+</div>
+
+{{ google_map_container(map) }}
+
+<div class="row">
+    <div class="large-12 columns">
+        <table width="100%">
+            <thead>
+              <tr>
+                <th>Organisatie</th>
+                <th>Land</th>
+                <th>Meer Informatie</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for organisation in organisations %}
+              <tr>
+                <td>{{organisation.name}}</td>
+                <td>{{organisation.location.country}}</td>
+                <td><a href="{{path('agrocycle_website_default_pionierdetail', {'id': organisation.id, 'slug':organisation.slug})}}">Meer informatie</a></td>
+              </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block customjs %}
+{{ google_map_js(map) }}   
+{% endblock %}

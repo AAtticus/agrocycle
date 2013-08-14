@@ -1,0 +1,91 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2><a href="{{path('agrocycle_admin_category_index')}}">Categorieën</a> &raquo; {{category.title}}</h2>
+                
+                <ul class="data-header-actions">
+                    <li><a  href="{{path('agrocycle_admin_category_index')}}"><span class="awe-arrow-left"></span> Terug naar overzicht</a></li>
+                    <li><a href="{{path('agrocycle_admin_category_edit', {'id' : category.id }) }}"><span class="awe-edit"></span> Edit Details</a> </li>
+                </ul>
+        </header>
+        
+        <section>
+            
+            <h1>{{category.title}}</h1>
+            
+        </section>
+
+
+    </div>
+</article>
+</div>
+
+<div class="row">
+						
+        <!-- Data block -->
+        <article class="span6 data-block">
+                <div class="data-container">
+                        <header>
+                                <h2>Subcategorieën van {{category.title}}</h2>
+                                <ul class="data-header-actions">
+                                    <li><span class="awe-group"></span></li>
+                                </ul>
+                        </header>
+                        <section>
+                                <table class="table table-stripped table-hover">
+                                        <thead>
+                                                <tr>
+                                                        <th>Titel</th>
+                                                        <th>Projecten</th>
+                                                        <th>Opties</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {% for subcategory in category.subcategories %}
+                                                <tr> 
+                                                    <td><a href="{{path('agrocycle_admin_subcategory_detail',{'id': subcategory.id,'slug': subcategory.slug})}}" title="Bekijk Details">{{subcategory.title}}</a></td>
+                                                    <td><a href="{{path('agrocycle_admin_subcategory_detail',{'id': subcategory.id,'slug': subcategory.slug})}}" title="Bekijk Details">{{subcategory.projects|length}}</a></td>
+                                                    <td><a href="{{path('agrocycle_admin_subcategory_edit',{'id': subcategory.id})}}"><span class="awe-edit"></span></a> <a href="{{path('agrocycle_admin_subcategory_delete',{'id': subcategory.id})}}"><span class="awe-remove"></span></a></td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                </table>
+                        </section>
+                </div>
+        </article>
+        <!-- /Data block -->
+
+        <!-- Data block -->
+        <article class="span6 data-block">
+                <div class="data-container">
+                        <header>
+                                <h2>Nieuwe subcategorie in {{category.title}}</h2>
+                                
+                                 <form action="{{path('agrocycle_admin_category_detail',{'id': category.id, 'slug':category.slug})}}" method="post" {{ form_enctype(form) }}>
+                                    {{ form_widget(form) }}
+
+                                    <div class="form-actions">
+                                        <input type="submit" class="btn btn-alt btn-large btn-success" />
+                                    </div>
+                                </form>
+                                
+                        </header>
+                        <section>
+                              
+                        </section>
+                </div>
+        </article>
+        <!-- /Data block -->
+
+</div>
+
+
+{% endblock %}
+
+{% block customjs %}
+{% endblock %}

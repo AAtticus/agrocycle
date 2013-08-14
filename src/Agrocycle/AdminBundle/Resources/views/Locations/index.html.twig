@@ -1,0 +1,53 @@
+{% extends "AgrocycleAdminBundle::base.html.twig" %}
+
+{% block body %}
+<article class="span12 data-block">
+    <div class="data-container">
+        <header>
+                <h2>Locaties (wordt gebruikt door Google Maps API)</h2>
+                
+                <ul class="data-header-actions">
+                        <li><a href="{{path('agrocycle_admin_location_create')}}" class="btn btn-success"><span class="awe-plus"></span> Nieuwe Locatie</a></li>
+                </ul>
+        </header>
+        
+        <section>
+            <table class="datatable table table-striped table-bordered table-hover" id="table">
+	<thead>
+		<tr>
+			<th>Straat</th>
+			<th>Nummer</th>
+			<th>Postcode</th>
+                        <th>Stad</th>
+                        <th>Land</th>
+                        <th>Coordinaten</th>
+                        <th>Bewerk</th>
+                        <th>Verwijder</th>
+
+		</tr>
+	</thead>
+	<tbody>
+                {% for location in locations %}
+		<tr class="gradeX">
+                        
+			<td>{{ location.address }}</td>
+                        <td>{{ location.number }}</td>
+                        <td>{{ location.postcode }}</td>
+                        <td>{{ location.city }}</td>
+                        <td>{{ location.country }}</td>
+                        <td><a href="https://maps.google.be/maps?q={{ location.lattitude }},{{ location.longitude }}" target="_blank">{{ location.lattitude }}<br />{{ location.longitude }}</a></td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_location_edit', {'id' : location.id }) }}"><span class="awe-edit"></span></a> 
+                        </td>
+                        <td class="center">
+                            <a href="{{path('agrocycle_admin_location_delete', {'id' : location.id }) }}"><span class="awe-remove"></span></a>
+                        </td>
+		</tr>
+                {% endfor %}
+	</tbody>
+</table>
+        </section>
+    </div>
+</article>    
+
+{% endblock %}
