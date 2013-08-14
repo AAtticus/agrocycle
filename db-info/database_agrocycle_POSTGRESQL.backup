@@ -1,0 +1,1401 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.4
+-- Dumped by pg_dump version 9.2.2
+-- Started on 2013-08-14 14:42:13
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+DROP DATABASE agrocycle;
+--
+-- TOC entry 2144 (class 1262 OID 16393)
+-- Name: agrocycle; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE agrocycle WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'Dutch_Belgium.1252' LC_CTYPE = 'Dutch_Belgium.1252';
+
+
+ALTER DATABASE agrocycle OWNER TO postgres;
+
+\connect agrocycle
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 5 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- TOC entry 2145 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+--
+-- TOC entry 196 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2147 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 179 (class 1259 OID 16416)
+-- Name: category; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE category (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    slug character varying(128) NOT NULL
+);
+
+
+ALTER TABLE public.category OWNER TO postgres;
+
+--
+-- TOC entry 168 (class 1259 OID 16394)
+-- Name: category_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.category_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 195 (class 1259 OID 16553)
+-- Name: fos_user; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE fos_user (
+    id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    username_canonical character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    email_canonical character varying(255) NOT NULL,
+    enabled boolean NOT NULL,
+    salt character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    last_login timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    locked boolean NOT NULL,
+    expired boolean NOT NULL,
+    expires_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    confirmation_token character varying(255) DEFAULT NULL::character varying,
+    password_requested_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    roles text NOT NULL,
+    credentials_expired boolean NOT NULL,
+    credentials_expire_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    firstname character varying(255) DEFAULT NULL::character varying,
+    lastname character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.fos_user OWNER TO postgres;
+
+--
+-- TOC entry 2148 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: COLUMN fos_user.roles; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN fos_user.roles IS '(DC2Type:array)';
+
+
+--
+-- TOC entry 178 (class 1259 OID 16414)
+-- Name: fos_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE fos_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.fos_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 16422)
+-- Name: location; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE location (
+    id integer NOT NULL,
+    address character varying(100) NOT NULL,
+    number integer NOT NULL,
+    postcode character varying(100) NOT NULL,
+    city character varying(100) NOT NULL,
+    country character varying(100) NOT NULL,
+    longitude numeric(18,12) NOT NULL,
+    lattitude numeric(18,12) NOT NULL
+);
+
+
+ALTER TABLE public.location OWNER TO postgres;
+
+--
+-- TOC entry 169 (class 1259 OID 16396)
+-- Name: location_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE location_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.location_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 16427)
+-- Name: organisation; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE organisation (
+    id integer NOT NULL,
+    location_id integer,
+    name character varying(100) NOT NULL,
+    slug character varying(128) NOT NULL,
+    email character varying(100) DEFAULT NULL::character varying,
+    website character varying(100) DEFAULT NULL::character varying,
+    telephone character varying(100) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.organisation OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 16398)
+-- Name: organisation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE organisation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.organisation_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 16440)
+-- Name: person; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE person (
+    id integer NOT NULL,
+    organisation_id integer,
+    firstname character varying(100) NOT NULL,
+    lastname character varying(100) DEFAULT NULL::character varying,
+    email character varying(100) DEFAULT NULL::character varying,
+    telephone character varying(40) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.person OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 16400)
+-- Name: person_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE person_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.person_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 16449)
+-- Name: process; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE process (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.process OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 16402)
+-- Name: process_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE process_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.process_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 16454)
+-- Name: project; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE project (
+    id integer NOT NULL,
+    organisation_id integer,
+    person_id integer,
+    research_id integer,
+    subcategory_id integer,
+    sector_id integer,
+    title character varying(255) NOT NULL,
+    slug character varying(255) NOT NULL,
+    source text NOT NULL,
+    is_bio character varying(3) NOT NULL,
+    primaryactivity text NOT NULL,
+    secondarycycleexample text,
+    cycleexample text,
+    inspiration text,
+    extrainformation text
+);
+
+
+ALTER TABLE public.project OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 16404)
+-- Name: project_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE project_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.project_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 16468)
+-- Name: project_process; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE project_process (
+    project_id integer NOT NULL,
+    process_id integer NOT NULL
+);
+
+
+ALTER TABLE public.project_process OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 16482)
+-- Name: projects_externalflows; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE projects_externalflows (
+    project_id integer NOT NULL,
+    process_id integer NOT NULL
+);
+
+
+ALTER TABLE public.projects_externalflows OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 16489)
+-- Name: projects_results; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE projects_results (
+    project_id integer NOT NULL,
+    result_id integer NOT NULL
+);
+
+
+ALTER TABLE public.projects_results OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 16475)
+-- Name: projects_secondaryflows; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE projects_secondaryflows (
+    project_id integer NOT NULL,
+    process_id integer NOT NULL
+);
+
+
+ALTER TABLE public.projects_secondaryflows OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 16496)
+-- Name: research; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE research (
+    id integer NOT NULL,
+    person_id integer,
+    organisation_id integer,
+    subcategory_id integer,
+    title character varying(255) NOT NULL,
+    website character varying(255) NOT NULL,
+    slug character varying(255) NOT NULL,
+    cycleexample text,
+    duration character varying(100) DEFAULT NULL::character varying,
+    applicant character varying(100) DEFAULT NULL::character varying,
+    financing character varying(100) DEFAULT NULL::character varying,
+    partners text,
+    notes text
+);
+
+
+ALTER TABLE public.research OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 16406)
+-- Name: research_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE research_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.research_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 191 (class 1259 OID 16518)
+-- Name: research_process; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE research_process (
+    research_id integer NOT NULL,
+    process_id integer NOT NULL
+);
+
+
+ALTER TABLE public.research_process OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 16525)
+-- Name: result; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE result (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    positive integer NOT NULL,
+    slug character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.result OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 16408)
+-- Name: result_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE result_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.result_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 16511)
+-- Name: results_researches; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE results_researches (
+    research_id integer NOT NULL,
+    result_id integer NOT NULL
+);
+
+
+ALTER TABLE public.results_researches OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 16534)
+-- Name: sector; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sector (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    slug character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.sector OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 16410)
+-- Name: sector_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sector_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sector_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 194 (class 1259 OID 16543)
+-- Name: subcategory; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE subcategory (
+    id integer NOT NULL,
+    category_id integer,
+    title character varying(255) NOT NULL,
+    slug character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.subcategory OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 16412)
+-- Name: subcategory_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE subcategory_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.subcategory_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2123 (class 0 OID 16416)
+-- Dependencies: 179
+-- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2149 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('category_id_seq', 1, false);
+
+
+--
+-- TOC entry 2139 (class 0 OID 16553)
+-- Dependencies: 195
+-- Data for Name: fos_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2150 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: fos_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fos_user_id_seq', 1, false);
+
+
+--
+-- TOC entry 2124 (class 0 OID 16422)
+-- Dependencies: 180
+-- Data for Name: location; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2151 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: location_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('location_id_seq', 1, false);
+
+
+--
+-- TOC entry 2125 (class 0 OID 16427)
+-- Dependencies: 181
+-- Data for Name: organisation; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2152 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: organisation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('organisation_id_seq', 1, false);
+
+
+--
+-- TOC entry 2126 (class 0 OID 16440)
+-- Dependencies: 182
+-- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2153 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('person_id_seq', 1, false);
+
+
+--
+-- TOC entry 2127 (class 0 OID 16449)
+-- Dependencies: 183
+-- Data for Name: process; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2154 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: process_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('process_id_seq', 1, false);
+
+
+--
+-- TOC entry 2128 (class 0 OID 16454)
+-- Dependencies: 184
+-- Data for Name: project; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2155 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: project_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('project_id_seq', 1, false);
+
+
+--
+-- TOC entry 2129 (class 0 OID 16468)
+-- Dependencies: 185
+-- Data for Name: project_process; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2131 (class 0 OID 16482)
+-- Dependencies: 187
+-- Data for Name: projects_externalflows; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2132 (class 0 OID 16489)
+-- Dependencies: 188
+-- Data for Name: projects_results; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2130 (class 0 OID 16475)
+-- Dependencies: 186
+-- Data for Name: projects_secondaryflows; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2133 (class 0 OID 16496)
+-- Dependencies: 189
+-- Data for Name: research; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2156 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: research_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('research_id_seq', 1, false);
+
+
+--
+-- TOC entry 2135 (class 0 OID 16518)
+-- Dependencies: 191
+-- Data for Name: research_process; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2136 (class 0 OID 16525)
+-- Dependencies: 192
+-- Data for Name: result; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2157 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: result_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('result_id_seq', 1, false);
+
+
+--
+-- TOC entry 2134 (class 0 OID 16511)
+-- Dependencies: 190
+-- Data for Name: results_researches; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2137 (class 0 OID 16534)
+-- Dependencies: 193
+-- Data for Name: sector; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2158 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: sector_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sector_id_seq', 1, false);
+
+
+--
+-- TOC entry 2138 (class 0 OID 16543)
+-- Dependencies: 194
+-- Data for Name: subcategory; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2159 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: subcategory_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('subcategory_id_seq', 1, false);
+
+
+--
+-- TOC entry 2024 (class 2606 OID 16420)
+-- Name: category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY category
+    ADD CONSTRAINT category_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2086 (class 2606 OID 16567)
+-- Name: fos_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY fos_user
+    ADD CONSTRAINT fos_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2027 (class 2606 OID 16426)
+-- Name: location_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY location
+    ADD CONSTRAINT location_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2030 (class 2606 OID 16437)
+-- Name: organisation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY organisation
+    ADD CONSTRAINT organisation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2034 (class 2606 OID 16447)
+-- Name: person_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY person
+    ADD CONSTRAINT person_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2036 (class 2606 OID 16453)
+-- Name: process_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY process
+    ADD CONSTRAINT process_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2043 (class 2606 OID 16461)
+-- Name: project_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT project_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2048 (class 2606 OID 16472)
+-- Name: project_process_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY project_process
+    ADD CONSTRAINT project_process_pkey PRIMARY KEY (project_id, process_id);
+
+
+--
+-- TOC entry 2056 (class 2606 OID 16486)
+-- Name: projects_externalflows_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY projects_externalflows
+    ADD CONSTRAINT projects_externalflows_pkey PRIMARY KEY (project_id, process_id);
+
+
+--
+-- TOC entry 2060 (class 2606 OID 16493)
+-- Name: projects_results_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY projects_results
+    ADD CONSTRAINT projects_results_pkey PRIMARY KEY (project_id, result_id);
+
+
+--
+-- TOC entry 2052 (class 2606 OID 16479)
+-- Name: projects_secondaryflows_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY projects_secondaryflows
+    ADD CONSTRAINT projects_secondaryflows_pkey PRIMARY KEY (project_id, process_id);
+
+
+--
+-- TOC entry 2065 (class 2606 OID 16506)
+-- Name: research_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY research
+    ADD CONSTRAINT research_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2074 (class 2606 OID 16522)
+-- Name: research_process_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY research_process
+    ADD CONSTRAINT research_process_pkey PRIMARY KEY (research_id, process_id);
+
+
+--
+-- TOC entry 2076 (class 2606 OID 16532)
+-- Name: result_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY result
+    ADD CONSTRAINT result_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2070 (class 2606 OID 16515)
+-- Name: results_researches_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY results_researches
+    ADD CONSTRAINT results_researches_pkey PRIMARY KEY (research_id, result_id);
+
+
+--
+-- TOC entry 2079 (class 2606 OID 16541)
+-- Name: sector_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sector
+    ADD CONSTRAINT sector_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2083 (class 2606 OID 16550)
+-- Name: subcategory_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY subcategory
+    ADD CONSTRAINT subcategory_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2045 (class 1259 OID 16473)
+-- Name: idx_100314f3166d1f9c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_100314f3166d1f9c ON project_process USING btree (project_id);
+
+
+--
+-- TOC entry 2046 (class 1259 OID 16474)
+-- Name: idx_100314f37ec2f574; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_100314f37ec2f574 ON project_process USING btree (process_id);
+
+
+--
+-- TOC entry 2071 (class 1259 OID 16523)
+-- Name: idx_1fb3a88c7909e1ed; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_1fb3a88c7909e1ed ON research_process USING btree (research_id);
+
+
+--
+-- TOC entry 2072 (class 1259 OID 16524)
+-- Name: idx_1fb3a88c7ec2f574; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_1fb3a88c7ec2f574 ON research_process USING btree (process_id);
+
+
+--
+-- TOC entry 2037 (class 1259 OID 16464)
+-- Name: idx_2fb3d0ee217bbb47; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_2fb3d0ee217bbb47 ON project USING btree (person_id);
+
+
+--
+-- TOC entry 2038 (class 1259 OID 16466)
+-- Name: idx_2fb3d0ee5dc6fe57; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_2fb3d0ee5dc6fe57 ON project USING btree (subcategory_id);
+
+
+--
+-- TOC entry 2039 (class 1259 OID 16465)
+-- Name: idx_2fb3d0ee7909e1ed; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_2fb3d0ee7909e1ed ON project USING btree (research_id);
+
+
+--
+-- TOC entry 2040 (class 1259 OID 16463)
+-- Name: idx_2fb3d0ee9e6b1585; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_2fb3d0ee9e6b1585 ON project USING btree (organisation_id);
+
+
+--
+-- TOC entry 2041 (class 1259 OID 16467)
+-- Name: idx_2fb3d0eede95c867; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_2fb3d0eede95c867 ON project USING btree (sector_id);
+
+
+--
+-- TOC entry 2032 (class 1259 OID 16448)
+-- Name: idx_34dcd1769e6b1585; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_34dcd1769e6b1585 ON person USING btree (organisation_id);
+
+
+--
+-- TOC entry 2061 (class 1259 OID 16508)
+-- Name: idx_57eb50c2217bbb47; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_57eb50c2217bbb47 ON research USING btree (person_id);
+
+
+--
+-- TOC entry 2062 (class 1259 OID 16510)
+-- Name: idx_57eb50c25dc6fe57; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_57eb50c25dc6fe57 ON research USING btree (subcategory_id);
+
+
+--
+-- TOC entry 2063 (class 1259 OID 16509)
+-- Name: idx_57eb50c29e6b1585; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_57eb50c29e6b1585 ON research USING btree (organisation_id);
+
+
+--
+-- TOC entry 2067 (class 1259 OID 16516)
+-- Name: idx_6a1cec067909e1ed; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_6a1cec067909e1ed ON results_researches USING btree (research_id);
+
+
+--
+-- TOC entry 2068 (class 1259 OID 16517)
+-- Name: idx_6a1cec067a7b643; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_6a1cec067a7b643 ON results_researches USING btree (result_id);
+
+
+--
+-- TOC entry 2053 (class 1259 OID 16487)
+-- Name: idx_8b48d20166d1f9c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_8b48d20166d1f9c ON projects_externalflows USING btree (project_id);
+
+
+--
+-- TOC entry 2054 (class 1259 OID 16488)
+-- Name: idx_8b48d207ec2f574; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_8b48d207ec2f574 ON projects_externalflows USING btree (process_id);
+
+
+--
+-- TOC entry 2049 (class 1259 OID 16480)
+-- Name: idx_949d8a61166d1f9c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_949d8a61166d1f9c ON projects_secondaryflows USING btree (project_id);
+
+
+--
+-- TOC entry 2050 (class 1259 OID 16481)
+-- Name: idx_949d8a617ec2f574; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_949d8a617ec2f574 ON projects_secondaryflows USING btree (process_id);
+
+
+--
+-- TOC entry 2057 (class 1259 OID 16494)
+-- Name: idx_b260ff05166d1f9c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_b260ff05166d1f9c ON projects_results USING btree (project_id);
+
+
+--
+-- TOC entry 2058 (class 1259 OID 16495)
+-- Name: idx_b260ff057a7b643; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_b260ff057a7b643 ON projects_results USING btree (result_id);
+
+
+--
+-- TOC entry 2081 (class 1259 OID 16552)
+-- Name: idx_ddca44812469de2; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_ddca44812469de2 ON subcategory USING btree (category_id);
+
+
+--
+-- TOC entry 2028 (class 1259 OID 16439)
+-- Name: idx_e6e132b464d218e; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_e6e132b464d218e ON organisation USING btree (location_id);
+
+
+--
+-- TOC entry 2077 (class 1259 OID 16533)
+-- Name: uniq_136ac113989d9b62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_136ac113989d9b62 ON result USING btree (slug);
+
+
+--
+-- TOC entry 2044 (class 1259 OID 16462)
+-- Name: uniq_2fb3d0ee989d9b62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_2fb3d0ee989d9b62 ON project USING btree (slug);
+
+
+--
+-- TOC entry 2080 (class 1259 OID 16542)
+-- Name: uniq_4ba3d9e8989d9b62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_4ba3d9e8989d9b62 ON sector USING btree (slug);
+
+
+--
+-- TOC entry 2066 (class 1259 OID 16507)
+-- Name: uniq_57eb50c2989d9b62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_57eb50c2989d9b62 ON research USING btree (slug);
+
+
+--
+-- TOC entry 2025 (class 1259 OID 16421)
+-- Name: uniq_64c19c1989d9b62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_64c19c1989d9b62 ON category USING btree (slug);
+
+
+--
+-- TOC entry 2087 (class 1259 OID 16568)
+-- Name: uniq_957a647992fc23a8; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_957a647992fc23a8 ON fos_user USING btree (username_canonical);
+
+
+--
+-- TOC entry 2088 (class 1259 OID 16569)
+-- Name: uniq_957a6479a0d96fbf; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_957a6479a0d96fbf ON fos_user USING btree (email_canonical);
+
+
+--
+-- TOC entry 2084 (class 1259 OID 16551)
+-- Name: uniq_ddca448989d9b62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_ddca448989d9b62 ON subcategory USING btree (slug);
+
+
+--
+-- TOC entry 2031 (class 1259 OID 16438)
+-- Name: uniq_e6e132b4989d9b62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uniq_e6e132b4989d9b62 ON organisation USING btree (slug);
+
+
+--
+-- TOC entry 2096 (class 2606 OID 16605)
+-- Name: fk_100314f3166d1f9c; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY project_process
+    ADD CONSTRAINT fk_100314f3166d1f9c FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2097 (class 2606 OID 16610)
+-- Name: fk_100314f37ec2f574; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY project_process
+    ADD CONSTRAINT fk_100314f37ec2f574 FOREIGN KEY (process_id) REFERENCES process(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2109 (class 2606 OID 16670)
+-- Name: fk_1fb3a88c7909e1ed; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY research_process
+    ADD CONSTRAINT fk_1fb3a88c7909e1ed FOREIGN KEY (research_id) REFERENCES research(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2110 (class 2606 OID 16675)
+-- Name: fk_1fb3a88c7ec2f574; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY research_process
+    ADD CONSTRAINT fk_1fb3a88c7ec2f574 FOREIGN KEY (process_id) REFERENCES process(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2092 (class 2606 OID 16585)
+-- Name: fk_2fb3d0ee217bbb47; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT fk_2fb3d0ee217bbb47 FOREIGN KEY (person_id) REFERENCES person(id);
+
+
+--
+-- TOC entry 2094 (class 2606 OID 16595)
+-- Name: fk_2fb3d0ee5dc6fe57; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT fk_2fb3d0ee5dc6fe57 FOREIGN KEY (subcategory_id) REFERENCES subcategory(id);
+
+
+--
+-- TOC entry 2093 (class 2606 OID 16590)
+-- Name: fk_2fb3d0ee7909e1ed; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT fk_2fb3d0ee7909e1ed FOREIGN KEY (research_id) REFERENCES research(id);
+
+
+--
+-- TOC entry 2091 (class 2606 OID 16580)
+-- Name: fk_2fb3d0ee9e6b1585; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT fk_2fb3d0ee9e6b1585 FOREIGN KEY (organisation_id) REFERENCES organisation(id);
+
+
+--
+-- TOC entry 2095 (class 2606 OID 16600)
+-- Name: fk_2fb3d0eede95c867; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT fk_2fb3d0eede95c867 FOREIGN KEY (sector_id) REFERENCES sector(id);
+
+
+--
+-- TOC entry 2090 (class 2606 OID 16575)
+-- Name: fk_34dcd1769e6b1585; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY person
+    ADD CONSTRAINT fk_34dcd1769e6b1585 FOREIGN KEY (organisation_id) REFERENCES organisation(id);
+
+
+--
+-- TOC entry 2104 (class 2606 OID 16645)
+-- Name: fk_57eb50c2217bbb47; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY research
+    ADD CONSTRAINT fk_57eb50c2217bbb47 FOREIGN KEY (person_id) REFERENCES person(id);
+
+
+--
+-- TOC entry 2106 (class 2606 OID 16655)
+-- Name: fk_57eb50c25dc6fe57; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY research
+    ADD CONSTRAINT fk_57eb50c25dc6fe57 FOREIGN KEY (subcategory_id) REFERENCES subcategory(id);
+
+
+--
+-- TOC entry 2105 (class 2606 OID 16650)
+-- Name: fk_57eb50c29e6b1585; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY research
+    ADD CONSTRAINT fk_57eb50c29e6b1585 FOREIGN KEY (organisation_id) REFERENCES organisation(id);
+
+
+--
+-- TOC entry 2107 (class 2606 OID 16660)
+-- Name: fk_6a1cec067909e1ed; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY results_researches
+    ADD CONSTRAINT fk_6a1cec067909e1ed FOREIGN KEY (research_id) REFERENCES research(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2108 (class 2606 OID 16665)
+-- Name: fk_6a1cec067a7b643; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY results_researches
+    ADD CONSTRAINT fk_6a1cec067a7b643 FOREIGN KEY (result_id) REFERENCES result(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2100 (class 2606 OID 16625)
+-- Name: fk_8b48d20166d1f9c; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projects_externalflows
+    ADD CONSTRAINT fk_8b48d20166d1f9c FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2101 (class 2606 OID 16630)
+-- Name: fk_8b48d207ec2f574; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projects_externalflows
+    ADD CONSTRAINT fk_8b48d207ec2f574 FOREIGN KEY (process_id) REFERENCES process(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2098 (class 2606 OID 16615)
+-- Name: fk_949d8a61166d1f9c; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projects_secondaryflows
+    ADD CONSTRAINT fk_949d8a61166d1f9c FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2099 (class 2606 OID 16620)
+-- Name: fk_949d8a617ec2f574; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projects_secondaryflows
+    ADD CONSTRAINT fk_949d8a617ec2f574 FOREIGN KEY (process_id) REFERENCES process(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2102 (class 2606 OID 16635)
+-- Name: fk_b260ff05166d1f9c; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projects_results
+    ADD CONSTRAINT fk_b260ff05166d1f9c FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2103 (class 2606 OID 16640)
+-- Name: fk_b260ff057a7b643; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projects_results
+    ADD CONSTRAINT fk_b260ff057a7b643 FOREIGN KEY (result_id) REFERENCES result(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2111 (class 2606 OID 16680)
+-- Name: fk_ddca44812469de2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subcategory
+    ADD CONSTRAINT fk_ddca44812469de2 FOREIGN KEY (category_id) REFERENCES category(id);
+
+
+--
+-- TOC entry 2089 (class 2606 OID 16570)
+-- Name: fk_e6e132b464d218e; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY organisation
+    ADD CONSTRAINT fk_e6e132b464d218e FOREIGN KEY (location_id) REFERENCES location(id);
+
+
+--
+-- TOC entry 2146 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2013-08-14 14:42:13
+
+--
+-- PostgreSQL database dump complete
+--
+
